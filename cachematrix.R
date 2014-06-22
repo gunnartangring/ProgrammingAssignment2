@@ -1,17 +1,20 @@
-## amatrix <- matrix(c(1, 2, 3, 4), nrow = 2,  ncol = 2)
-##  x<-matrix(c(2,4,1,3),2,2)
-
 ## makeCacheMatrix
 ## This function returns a list that contains a matrix and its inverse
 ## The purpose is to be able to cache the matrix inverse to speed up computation
+
 makeCacheMatrix <- function(x = matrix()) {
+  ## Set m to null
   m <- NULL
+  ## Create local function set, which sets x to y and m to null
   set <- function(y) {
     x <<- y
     m <<- NULL
   }
+  ## Create local function get
   get <- function() x
+  ## Create local function setsolve
   setsolve <- function(solve) m <<- solve
+  ## Create local function getsolve
   getsolve <- function() m
   ## Return a list of functions to get and set matrix and inverse
   list(set = set, get = get,
@@ -20,11 +23,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 ## cacheSolve
-## This function computes and stores the inverse for the matrix lists vreated by makeCacheMatrix
-##
-## cacheSolve: This function computes the inverse of the special "matrix"
-## returned by makeCacheMatrix above. If the inverse has already been calculated
-## (and the matrix has not changed), then the cachesolve should retrieve the inverse from the cache.
+## This function computes and stores the inverse for the matrix lists created by makeCacheMatrix
+## Inverse is taken from the cache if such exists
 
 cacheSolve <- function(x, ...) {
   ## Get inverse for matrix
